@@ -106,7 +106,7 @@
       }
 
       async function loadConfig() {
-        const apiBase = apiBaseFromQuery || "http://localhost:3000";
+        const apiBase = apiBaseFromQuery || "https://leadhunter-backend-mgru.onrender.com";
         const response = await fetch(`${apiBase.replace(/\/+$/, "")}/auth/config`);
         const payload = await response.json();
         if (!response.ok || payload.ok === false) {
