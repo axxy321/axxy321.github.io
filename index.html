@@ -447,6 +447,20 @@
         color: var(--text);
       }
 
+      .auth-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 14px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(134, 241, 198, 0.08);
+        border: 1px solid rgba(134, 241, 198, 0.18);
+        color: #d8fbe9;
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
       .section-heading {
         max-width: 760px;
         margin-bottom: 28px;
@@ -920,6 +934,7 @@
                 <a class="pricing-cta-primary" href="#" data-paddle-plan="monthly">Buy Monthly</a>
                 <a class="pricing-cta-secondary" href="#" data-paddle-plan="yearly">Buy Yearly</a>
               </div>
+              <div class="auth-chip" data-auth-state>Sign in before buying Pro on any device.</div>
               <div class="pricing-badge-row">
                 <span class="pricing-badge">Yearly plan: $79</span>
                 <span class="pricing-badge">Secure Paddle checkout</span>
@@ -945,15 +960,62 @@
           return;
         }
 
+        const STORAGE_KEY = "leadhunter_web_auth";
         const CLIENT_TOKEN = "live_5907a88a8051c1353ce1c59f83e";
         const PRICES = {
           monthly: "pri_01kne35p1jcfdt7bybsb01swh9",
           yearly: "pri_01kne37cpqyqx2ysp5d6ah4vzd"
         };
+        const authStateEl = document.querySelector("[data-auth-state]");
+
+        function getAuthState() {
+          try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+          } catch (error) {
+            return {};
+          }
+        }
+
+        function isSignedIn() {
+          const auth = getAuthState();
+          return Boolean(auth.sessionToken);
+        }
+
+        function updateAuthStateUi() {
+          if (!authStateEl) {
+            return;
+          }
+          const auth = getAuthState();
+          if (auth.sessionToken) {
+            authStateEl.textContent = `Signed in as ${auth.user?.name || auth.user?.email || "LeadHunter user"}`;
+          } else {
+            authStateEl.textContent = "Sign in before buying Pro on any device.";
+          }
+        }
+
+        function buildSignInUrl(plan) {
+          const returnTo = new URL("https://axxy321.github.io/#pricing");
+          if (plan) {
+            returnTo.searchParams.set("buy", plan);
+          }
+          return `/auth-complete.html?api_base=${encodeURIComponent("https://leadhunter-backend-mgru.onrender.com")}&return_to=${encodeURIComponent(returnTo.toString())}`;
+        }
 
         window.Paddle.Initialize({
           token: CLIENT_TOKEN
         });
+
+        updateAuthStateUi();
+
+        const currentUrl = new URL(window.location.href);
+        const pendingPlan = currentUrl.searchParams.get("buy");
+        if (pendingPlan && isSignedIn() && PRICES[pendingPlan]) {
+          currentUrl.searchParams.delete("buy");
+          window.history.replaceState({}, "", currentUrl.toString());
+          window.Paddle.Checkout.open({
+            items: [{ priceId: PRICES[pendingPlan], quantity: 1 }]
+          });
+        }
 
         document.querySelectorAll("[data-paddle-plan]").forEach((button) => {
           button.addEventListener("click", function handleCheckout(event) {
@@ -961,6 +1023,11 @@
             const plan = button.getAttribute("data-paddle-plan");
             const priceId = PRICES[plan];
             if (!priceId) {
+              return;
+            }
+
+             if (!isSignedIn()) {
+              window.location.href = buildSignInUrl(plan);
               return;
             }
 
