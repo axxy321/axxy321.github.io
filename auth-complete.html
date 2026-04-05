@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeadHunter Sign In</title>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        font-family: "Avenir Next", "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(36, 130, 102, 0.3), transparent 28%), #081612;
+        color: #f8f5eb;
+      }
+
+      .card {
+        width: min(540px, 100%);
+        padding: 32px;
+        border-radius: 28px;
+        background: rgba(12, 33, 27, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      }
+
+      .eyebrow {
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(248, 245, 235, 0.65);
+      }
+
+      h1 {
+        margin: 10px 0 8px;
+        font-size: 34px;
+        line-height: 1.05;
+      }
+
+      p {
+        margin: 0;
+        color: rgba(248, 245, 235, 0.75);
+        line-height: 1.6;
+      }
+
+      .status {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.06);
+        color: #e9f8f1;
+      }
+
+      .error {
+        background: rgba(212, 71, 71, 0.14);
+        color: #ffd1d1;
+      }
+
+      .success {
+        background: rgba(47, 166, 112, 0.16);
+        color: #d8ffe9;
+      }
+
+      #google-button {
+        margin-top: 20px;
+        min-height: 44px;
+      }
+
+      .hint {
+        margin-top: 18px;
+        font-size: 13px;
+      }
+    </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
+  <body>
+    <main class="card">
+      <div class="eyebrow">LeadHunter</div>
+      <h1>Finish Google Sign In</h1>
+      <p>Sign in with the same Google account you want to use for LeadHunter across devices. Once it succeeds, you can go back to the extension.</p>
+      <div id="status" class="status">Loading sign-in options…</div>
+      <div id="google-button"></div>
+      <p class="hint">This page links your browser session to the extension sign-in request. Keep this tab open until you see success.</p>
+    </main>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code") || "";
+      const apiBaseFromQuery = params.get("api_base") || "";
+      const returnTo = params.get("return_to") || "";
+      const statusEl = document.getElementById("status");
+      const googleButtonEl = document.getElementById("google-button");
+      const STORAGE_KEY = "leadhunter_web_auth";
+
+      function setStatus(message, variant = "") {
+        statusEl.textContent = message;
+        statusEl.className = `status${variant ? ` ${variant}` : ""}`;
+      }
+
+      async function loadConfig() {
+        const apiBase = apiBaseFromQuery || "http://localhost:3000";
+        const response = await fetch(`${apiBase.replace(/\/+$/, "")}/auth/config`);
+        const payload = await response.json();
+        if (!response.ok || payload.ok === false) {
+          throw new Error(payload.error || "Unable to load auth config.");
+        }
+        if (!payload.auth.googleClientId) {
+          throw new Error("Google sign-in is not configured on the backend yet.");
+        }
+        return {
+          apiBase,
+          googleClientId: payload.auth.googleClientId
+        };
+      }
+
+      async function completeAuth(apiBase, credential) {
+        const endpoint = code ? "/auth/google/complete-device" : "/auth/google/web-login";
+        const response = await fetch(`${apiBase.replace(/\/+$/, "")}${endpoint}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            ...(code ? { code } : {}),
+            idToken: credential
+          })
+        });
+        const payload = await response.json();
+        if (!response.ok || payload.ok === false) {
+          throw new Error(payload.error || "Sign-in could not be completed.");
+        }
+        if (payload.sessionToken) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            sessionToken: payload.sessionToken,
+            user: payload.session?.user || null,
+            plan: payload.session?.entitlement?.plan || "free"
+          }));
+        }
+        setStatus(
+          code
+            ? "Google sign-in complete. You can return to the LeadHunter extension now."
+            : "Google sign-in complete. Your LeadHunter account is now connected.",
+          "success"
+        );
+        googleButtonEl.innerHTML = "";
+        if (returnTo) {
+          setTimeout(() => {
+            window.location.href = returnTo;
+          }, 1200);
+        }
+      }
+
+      loadConfig()
+        .then(({ apiBase, googleClientId }) => {
+          setStatus(code ? "Choose your Google account to continue." : "Sign in with Google to connect your LeadHunter account.");
+          google.accounts.id.initialize({
+            client_id: googleClientId,
+            callback: async (response) => {
+              try {
+                setStatus("Verifying your Google account…");
+                await completeAuth(apiBase, response.credential);
+              } catch (error) {
+                setStatus(error.message, "error");
+              }
+            }
+          });
+          google.accounts.id.renderButton(googleButtonEl, {
+            theme: "outline",
+            size: "large",
+            width: 320,
+            text: "continue_with"
+          });
+        })
+        .catch((error) => {
+          setStatus(error.message, "error");
+        });
+    </script>
+  </body>
+</html>

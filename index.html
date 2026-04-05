@@ -152,6 +152,7 @@
       }
 
       .nav-cta,
+      .nav-link-btn,
       .primary-btn,
       .secondary-btn,
       .pricing-card a {
@@ -172,6 +173,20 @@
       }
 
       .nav-cta { padding: 12px 18px; }
+
+      .nav-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-link-btn {
+        padding: 12px 18px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        color: var(--text);
+        font-weight: 800;
+      }
 
       .hero {
         display: grid;
@@ -621,6 +636,7 @@
       }
 
       .nav-cta:hover,
+      .nav-link-btn:hover,
       .primary-btn:hover,
       .secondary-btn:hover,
       .pricing-card a:hover {
@@ -644,6 +660,11 @@
 
         .topbar {
           flex-wrap: wrap;
+        }
+
+        .nav-actions {
+          width: 100%;
+          justify-content: flex-end;
         }
       }
 
@@ -697,7 +718,10 @@
           <a href="#pricing">Pricing</a>
         </nav>
 
-        <a class="nav-cta" href="#pricing">Get Early Access</a>
+        <div class="nav-actions">
+          <a class="nav-link-btn" href="/auth-complete.html?api_base=https%3A%2F%2Fleadhunter-backend-mgru.onrender.com&return_to=https%3A%2F%2Faxxy321.github.io%2F%23pricing">Sign In</a>
+          <a class="nav-cta" href="#pricing">Get Pro</a>
+        </div>
       </header>
 
       <main>
@@ -892,6 +916,7 @@
                 <li>Compare mode and bulk scans</li>
               </ul>
               <div class="pricing-actions">
+                <a class="pricing-cta-muted" href="/auth-complete.html?api_base=https%3A%2F%2Fleadhunter-backend-mgru.onrender.com&return_to=https%3A%2F%2Faxxy321.github.io%2F%23pricing">Sign In</a>
                 <a class="pricing-cta-primary" href="#" data-paddle-plan="monthly">Buy Monthly</a>
                 <a class="pricing-cta-secondary" href="#" data-paddle-plan="yearly">Buy Yearly</a>
               </div>
