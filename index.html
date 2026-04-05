@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeadHunter | Website Contact Intelligence</title>
+    <meta
+      name="description"
+      content="LeadHunter turns any company website into a contact map with public emails, contact paths, and outreach-ready exports."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #081916;
+        --panel: rgba(10, 29, 24, 0.74);
+        --line: rgba(193, 255, 228, 0.13);
+        --text: #f2f7f1;
+        --muted: #a7c2b5;
+        --accent-strong: #29c48b;
+        --warm: #ffd696;
+        --shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        font-family: "Manrope", sans-serif;
+        background:
+          radial-gradient(circle at top left, rgba(41, 196, 139, 0.18), transparent 28%),
+          radial-gradient(circle at 80% 20%, rgba(255, 214, 150, 0.14), transparent 24%),
+          linear-gradient(180deg, #0b201c 0%, #081310 100%);
+        color: var(--text);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .page-shell {
+        position: relative;
+        overflow: hidden;
+        padding: 28px 28px 80px;
+      }
+
+      .orb {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(12px);
+        pointer-events: none;
+        animation: float 12s ease-in-out infinite;
+      }
+
+      .orb-one {
+        top: 120px;
+        right: -50px;
+        width: 220px;
+        height: 220px;
+        background: rgba(134, 241, 198, 0.16);
+      }
+
+      .orb-two {
+        top: 760px;
+        left: -40px;
+        width: 190px;
+        height: 190px;
+        background: rgba(255, 214, 150, 0.12);
+        animation-delay: 1.2s;
+      }
+
+      .orb-three {
+        top: 1480px;
+        right: 12%;
+        width: 160px;
+        height: 160px;
+        background: rgba(89, 174, 255, 0.12);
+        animation-delay: 2.2s;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+        50% { transform: translate3d(8px, -18px, 0) scale(1.04); }
+      }
+
+      .topbar,
+      .hero,
+      .logo-strip,
+      .feature-section,
+      .workflow-section,
+      .demo-section,
+      .pricing-section {
+        position: relative;
+        z-index: 1;
+        width: min(1180px, 100%);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 10px 0 26px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(134, 241, 198, 0.2), rgba(255, 214, 150, 0.18));
+        border: 1px solid var(--line);
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+      }
+
+      .brand-text {
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        font-size: 1.05rem;
+      }
+
+      .nav {
+        display: inline-flex;
+        gap: 22px;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+
+      .nav-cta,
+      .primary-btn,
+      .secondary-btn,
+      .pricing-card a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+      }
+
+      .nav-cta,
+      .primary-btn,
+      .pricing-card-featured a {
+        background: linear-gradient(135deg, var(--accent-strong), #6bf0b7);
+        color: #082019;
+        font-weight: 800;
+        box-shadow: 0 22px 45px rgba(41, 196, 139, 0.24);
+      }
+
+      .nav-cta { padding: 12px 18px; }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 42px;
+        align-items: center;
+        padding: 28px 0 64px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        margin-bottom: 16px;
+        padding: 9px 14px;
+        border-radius: 999px;
+        background: rgba(134, 241, 198, 0.08);
+        border: 1px solid rgba(134, 241, 198, 0.18);
+        color: #c6f7e4;
+        font-size: 0.83rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero h1,
+      .section-heading h2,
+      .demo-copy h2 {
+        margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        letter-spacing: -0.05em;
+      }
+
+      .hero h1 {
+        max-width: 11ch;
+        font-size: clamp(3.1rem, 6vw, 6rem);
+        line-height: 0.95;
+      }
+
+      .hero-copy p,
+      .feature-card p,
+      .workflow-card p,
+      .demo-copy p,
+      .pricing-card li,
+      .section-heading p {
+        color: var(--muted);
+      }
+
+      .hero-copy p {
+        max-width: 640px;
+        margin: 18px 0 28px;
+        font-size: 1.06rem;
+        line-height: 1.75;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+        margin-bottom: 26px;
+      }
+
+      .primary-btn,
+      .secondary-btn,
+      .pricing-card a {
+        padding: 15px 22px;
+        font-weight: 800;
+      }
+
+      .secondary-btn {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .stat-card,
+      .feature-card,
+      .workflow-card,
+      .pricing-card,
+      .demo-card,
+      .panel,
+      .hero-visual {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        backdrop-filter: blur(18px);
+        box-shadow: var(--shadow);
+      }
+
+      .stat-card {
+        border-radius: 24px;
+        padding: 18px 18px 20px;
+      }
+
+      .stat-card strong {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1.25rem;
+      }
+
+      .stat-card span {
+        color: var(--muted);
+        font-size: 0.94rem;
+      }
+
+      .hero-visual {
+        border-radius: 32px;
+        overflow: hidden;
+        transition: transform 220ms ease, box-shadow 220ms ease;
+      }
+
+      .hero-visual:hover {
+        transform: perspective(1200px) rotateX(-4deg) rotateY(6deg) translateY(-4px);
+      }
+
+      .window-bar {
+        display: flex;
+        gap: 8px;
+        padding: 18px 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .window-bar span {
+        width: 11px;
+        height: 11px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.24);
+      }
+
+      .window-content { padding: 24px; }
+
+      .window-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+
+      .window-label,
+      .panel span,
+      .plan-name,
+      .feature-index,
+      .workflow-step {
+        color: #b9d8cb;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.74rem;
+        font-weight: 800;
+      }
+
+      .window-header h3 {
+        margin: 6px 0 0;
+        font-size: 1.9rem;
+      }
+
+      .window-score {
+        min-width: 110px;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.04);
+        text-align: right;
+      }
+
+      .window-score strong {
+        display: block;
+        margin-top: 6px;
+        font-size: 2rem;
+      }
+
+      .window-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 14px;
+      }
+
+      .panel {
+        border-radius: 24px;
+        padding: 18px;
+      }
+
+      .panel-accent {
+        background: linear-gradient(180deg, rgba(134, 241, 198, 0.16), rgba(134, 241, 198, 0.05));
+        grid-row: span 2;
+      }
+
+      .panel strong {
+        display: block;
+        margin: 10px 0 8px;
+        font-size: 1.28rem;
+      }
+
+      .panel p,
+      .panel li {
+        color: var(--muted);
+      }
+
+      .panel ul {
+        margin: 12px 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 10px;
+      }
+
+      .logo-strip {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 18px;
+        align-items: center;
+        padding: 26px 28px;
+        margin-bottom: 36px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .logo-strip span {
+        color: #d2ebdf;
+        font-weight: 700;
+      }
+
+      .logo-strip div {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        flex-wrap: wrap;
+        color: var(--muted);
+      }
+
+      .feature-section,
+      .workflow-section,
+      .demo-section,
+      .pricing-section {
+        padding-top: 70px;
+      }
+
+      .section-heading {
+        max-width: 760px;
+        margin-bottom: 28px;
+      }
+
+      .section-heading h2,
+      .demo-copy h2 {
+        font-size: clamp(2.2rem, 4vw, 4rem);
+        line-height: 1;
+      }
+
+      .feature-grid,
+      .workflow-grid,
+      .pricing-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .feature-grid,
+      .workflow-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .pricing-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feature-card,
+      .workflow-card,
+      .pricing-card {
+        border-radius: 28px;
+        padding: 24px;
+        transition: transform 180ms ease;
+      }
+
+      .feature-card:hover,
+      .workflow-card:hover,
+      .pricing-card:hover {
+        transform: translateY(-6px);
+      }
+
+      .feature-card h3,
+      .workflow-card h3,
+      .pricing-card h3 {
+        margin: 14px 0 10px;
+        font-size: 1.42rem;
+      }
+
+      .demo-card {
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        gap: 18px;
+        align-items: center;
+        padding: 30px;
+        border-radius: 36px;
+      }
+
+      .demo-pulse {
+        display: grid;
+        place-items: center;
+        width: 260px;
+        height: 260px;
+        margin: 0 auto;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle, rgba(134, 241, 198, 0.32) 0%, rgba(134, 241, 198, 0.08) 45%, transparent 72%);
+        border: 1px solid rgba(134, 241, 198, 0.2);
+        animation: pulse 3.2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.88; }
+        50% { transform: scale(1.06); opacity: 1; }
+      }
+
+      .demo-core {
+        display: grid;
+        place-items: center;
+        width: 124px;
+        height: 124px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--accent-strong), #65ecb3);
+        color: #082019;
+        font-size: 1.4rem;
+        font-weight: 800;
+      }
+
+      .pricing-card strong {
+        display: block;
+        margin: 8px 0 18px;
+        font-size: 2.4rem;
+      }
+
+      .pricing-card strong span {
+        font-size: 1rem;
+        color: var(--muted);
+      }
+
+      .pricing-card ul {
+        margin: 0 0 22px;
+        padding-left: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .pricing-card a {
+        width: fit-content;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+      }
+
+      .pricing-card-featured {
+        position: relative;
+        background: linear-gradient(180deg, rgba(14, 48, 39, 0.96), rgba(7, 22, 18, 0.96));
+        border-color: rgba(134, 241, 198, 0.26);
+      }
+
+      .pricing-card-featured::before {
+        content: "Most Popular";
+        position: absolute;
+        top: 18px;
+        right: 18px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255, 214, 150, 0.18);
+        color: var(--warm);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .nav-cta:hover,
+      .primary-btn:hover,
+      .secondary-btn:hover,
+      .pricing-card a:hover {
+        transform: translateY(-2px);
+      }
+
+      @media (max-width: 1040px) {
+        .hero,
+        .demo-card,
+        .feature-grid,
+        .workflow-grid,
+        .pricing-grid,
+        .logo-strip,
+        .window-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .panel-accent {
+          grid-row: auto;
+        }
+
+        .topbar {
+          flex-wrap: wrap;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .page-shell {
+          padding: 18px 18px 52px;
+        }
+
+        .nav {
+          width: 100%;
+          order: 3;
+          justify-content: space-between;
+        }
+
+        .hero h1 {
+          max-width: none;
+          font-size: 3rem;
+        }
+
+        .stat-row {
+          grid-template-columns: 1fr;
+        }
+
+        .window-header {
+          flex-direction: column;
+        }
+
+        .pricing-card-featured::before {
+          position: static;
+          display: inline-flex;
+          margin-bottom: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="orb orb-one"></div>
+      <div class="orb orb-two"></div>
+      <div class="orb orb-three"></div>
+
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">LH</span>
+          <span class="brand-text">LeadHunter</span>
+        </div>
+
+        <nav class="nav">
+          <a href="#features">Features</a>
+          <a href="#workflow">Workflow</a>
+          <a href="#pricing">Pricing</a>
+        </nav>
+
+        <a class="nav-cta" href="#pricing">Get Early Access</a>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">Website Contact Intelligence</span>
+            <h1>Turn any company website into a live contact map.</h1>
+            <p>
+              LeadHunter helps founders, recruiters, agencies, and sales teams discover public
+              business emails, contact routes, and outreach-ready lead exports without leaving the
+              page.
+            </p>
+            <div class="hero-actions">
+              <a class="primary-btn" href="#pricing">Start Free</a>
+              <a class="secondary-btn" href="#demo">Watch Product Flow</a>
+            </div>
+            <div class="stat-row">
+              <div class="stat-card">
+                <strong>1 click</strong>
+                <span>to scan any public site</span>
+              </div>
+              <div class="stat-card">
+                <strong>5x faster</strong>
+                <span>than manual contact hunting</span>
+              </div>
+              <div class="stat-card">
+                <strong>0 dashboards</strong>
+                <span>needed for discovery</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="window-bar">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="window-content">
+              <div class="window-header">
+                <div>
+                  <p class="window-label">Workflow Snapshot</p>
+                  <h3>Research to outreach</h3>
+                </div>
+                <div class="window-score">
+                  <span>Outcome</span>
+                  <strong>3x</strong>
+                </div>
+              </div>
+
+              <div class="window-grid">
+                <div class="panel panel-accent">
+                  <span>Export-ready lead pack</span>
+                  <strong>Emails, forms, phones, and teams in one place</strong>
+                  <p>Package every public contact path into a clean export your team can act on immediately.</p>
+                </div>
+
+                <div class="panel">
+                  <span>What you get</span>
+                  <ul>
+                    <li>Contact map</li>
+                    <li>Best route recommendation</li>
+                    <li>CSV and JSON export</li>
+                    <li>Saved lead history</li>
+                  </ul>
+                </div>
+
+                <div class="panel">
+                  <span>Built for</span>
+                  <ul>
+                    <li>Agencies</li>
+                    <li>Recruiters</li>
+                    <li>Sales teams</li>
+                    <li>Founders</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="logo-strip">
+          <span>Built for outreach-heavy teams</span>
+          <div>
+            <p>Agencies</p>
+            <p>Recruiters</p>
+            <p>Founders</p>
+            <p>Sales Teams</p>
+            <p>Operators</p>
+          </div>
+        </section>
+
+        <section class="feature-section" id="features">
+          <div class="section-heading">
+            <span class="eyebrow">Why it feels different</span>
+            <h2>Designed like a browser superpower, not another lead dashboard.</h2>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <span class="feature-index">01</span>
+              <h3>Contact Map</h3>
+              <p>Group public contact routes by sales, support, careers, operations, and general outreach.</p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-index">02</span>
+              <h3>Scan While Browsing</h3>
+              <p>Run LeadHunter directly on the website you're already researching without switching tabs or dashboards.</p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-index">03</span>
+              <h3>Ready-to-Export Leads</h3>
+              <p>Save contacts, package the best routes, and export clean CSVs named after each company.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="workflow-section" id="workflow">
+          <div class="section-heading">
+            <span class="eyebrow">Workflow</span>
+            <h2>From curiosity to clean lead export in under a minute.</h2>
+          </div>
+
+          <div class="workflow-grid">
+            <article class="workflow-card">
+              <span class="workflow-step">01</span>
+              <h3>Open any website</h3>
+              <p>LeadHunter lives in the browser, so your research starts exactly where your prospect already is.</p>
+            </article>
+            <article class="workflow-card">
+              <span class="workflow-step">02</span>
+              <h3>Scan and organize</h3>
+              <p>The widget clusters available contact paths into a clean, outreach-friendly view.</p>
+            </article>
+            <article class="workflow-card">
+              <span class="workflow-step">03</span>
+              <h3>Export and act</h3>
+              <p>Turn that scan into a named export, lead history entry, or saved workspace for follow-up.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="demo-section" id="demo">
+          <div class="demo-card">
+            <div class="demo-copy">
+              <span class="eyebrow">Product moment</span>
+              <h2>See who to contact before your competitor even finds the contact page.</h2>
+              <p>
+                LeadHunter scans public website structures, surfaces business contact paths, and
+                packages them into a workflow that feels instant.
+              </p>
+            </div>
+
+            <div class="demo-pulse">
+              <div class="demo-core">Scan</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="pricing-section" id="pricing">
+          <div class="section-heading">
+            <span class="eyebrow">Pricing</span>
+            <h2>Start free. Upgrade when your workflow starts compounding.</h2>
+          </div>
+
+          <div class="pricing-grid">
+            <article class="pricing-card">
+              <p class="plan-name">Free</p>
+              <h3>Browser-first prospecting</h3>
+              <strong>$0</strong>
+              <ul>
+                <li>Daily website scans</li>
+                <li>Current-site lead discovery</li>
+                <li>JSON export</li>
+              </ul>
+              <a href="mailto:hello@leadhunter.local?subject=LeadHunter%20Free%20Access">Join Free Access</a>
+            </article>
+
+            <article class="pricing-card pricing-card-featured">
+              <p class="plan-name">Pro</p>
+              <h3>For teams turning scans into pipeline</h3>
+              <strong>$19<span>/month</span></strong>
+              <ul>
+                <li>Unlimited scans</li>
+                <li>CSV export and workspaces</li>
+                <li>Compare mode and bulk scans</li>
+              </ul>
+              <a href="mailto:hello@leadhunter.local?subject=LeadHunter%20Pro%20Waitlist">Request Pro Invite</a>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+  </html>
