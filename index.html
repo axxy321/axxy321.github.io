@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
     <style>
       :root {
         color-scheme: dark;
@@ -542,6 +543,19 @@
         border: 1px solid var(--line);
       }
 
+      .pricing-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .pricing-note {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.6;
+      }
+
       .pricing-card-featured {
         position: relative;
         background: linear-gradient(180deg, rgba(14, 48, 39, 0.96), rgba(7, 22, 18, 0.96));
@@ -816,19 +830,24 @@
                 <li>Current-site lead discovery</li>
                 <li>JSON export</li>
               </ul>
-              <a href="mailto:hello@leadhunter.local?subject=LeadHunter%20Free%20Access">Join Free Access</a>
+              <a href="#pricing">Start Free</a>
+              <div class="pricing-note">Install the extension, scan public sites, and explore the core workflow before upgrading.</div>
             </article>
 
             <article class="pricing-card pricing-card-featured">
               <p class="plan-name">Pro</p>
               <h3>For teams turning scans into pipeline</h3>
-              <strong>$19<span>/month</span></strong>
+              <strong>$9<span>/month</span></strong>
               <ul>
                 <li>Unlimited scans</li>
                 <li>CSV export and workspaces</li>
                 <li>Compare mode and bulk scans</li>
               </ul>
-              <a href="mailto:hello@leadhunter.local?subject=LeadHunter%20Pro%20Waitlist">Request Pro Invite</a>
+              <div class="pricing-actions">
+                <a href="#" data-paddle-plan="monthly">Buy Monthly</a>
+                <a href="#" data-paddle-plan="yearly">Buy Yearly</a>
+              </div>
+              <div class="pricing-note">Annual plan saves you more and gives the same full Pro access.</div>
             </article>
           </div>
         </section>
@@ -843,5 +862,37 @@
         </footer>
       </main>
     </div>
+    <script>
+      (function initLeadHunterCheckout() {
+        if (!window.Paddle) {
+          return;
+        }
+
+        const CLIENT_TOKEN = "live_5907a88a8051c1353ce1c59f83e";
+        const PRICES = {
+          monthly: "pri_01kne35p1jcfdt7bybsb01swh9",
+          yearly: "pri_01kne37cpqyqx2ysp5d6ah4vzd"
+        };
+
+        window.Paddle.Initialize({
+          token: CLIENT_TOKEN
+        });
+
+        document.querySelectorAll("[data-paddle-plan]").forEach((button) => {
+          button.addEventListener("click", function handleCheckout(event) {
+            event.preventDefault();
+            const plan = button.getAttribute("data-paddle-plan");
+            const priceId = PRICES[plan];
+            if (!priceId) {
+              return;
+            }
+
+            window.Paddle.Checkout.open({
+              items: [{ priceId, quantity: 1 }]
+            });
+          });
+        });
+      })();
+    </script>
   </body>
   </html>
