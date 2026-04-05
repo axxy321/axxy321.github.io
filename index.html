@@ -102,7 +102,8 @@
       .feature-section,
       .workflow-section,
       .demo-section,
-      .pricing-section {
+      .pricing-section,
+      .site-footer {
         position: relative;
         z-index: 1;
         width: min(1180px, 100%);
@@ -408,6 +409,26 @@
       .demo-section,
       .pricing-section {
         padding-top: 70px;
+      }
+
+      .site-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding-top: 72px;
+        color: var(--muted);
+      }
+
+      .site-footer-links {
+        display: inline-flex;
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .site-footer a:hover {
+        color: var(--text);
       }
 
       .section-heading {
@@ -811,6 +832,15 @@
             </article>
           </div>
         </section>
+
+        <footer class="site-footer">
+          <div>LeadHunter by Ankur Vishwakarma</div>
+          <div class="site-footer-links">
+            <a href="/terms.html">Terms</a>
+            <a href="/privacy.html">Privacy</a>
+            <a href="/refund.html">Refund</a>
+          </div>
+        </footer>
       </main>
     </div>
   </body>
