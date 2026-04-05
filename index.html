@@ -547,6 +547,7 @@
         display: flex;
         gap: 12px;
         flex-wrap: wrap;
+        margin-top: 6px;
       }
 
       .pricing-note {
@@ -554,6 +555,48 @@
         color: var(--muted);
         font-size: 0.92rem;
         line-height: 1.6;
+      }
+
+      .pricing-card .pricing-cta-primary,
+      .pricing-card .pricing-cta-secondary,
+      .pricing-card .pricing-cta-muted {
+        min-width: 168px;
+      }
+
+      .pricing-card .pricing-cta-primary {
+        background: linear-gradient(135deg, var(--accent-strong), #6bf0b7);
+        color: #082019;
+        border: 0;
+      }
+
+      .pricing-card .pricing-cta-secondary {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(193, 255, 228, 0.18);
+        color: var(--text);
+      }
+
+      .pricing-card .pricing-cta-muted {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+
+      .pricing-badge-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 14px 0 0;
+      }
+
+      .pricing-badge {
+        display: inline-flex;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(193, 255, 228, 0.12);
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 700;
       }
 
       .pricing-card-featured {
@@ -817,7 +860,8 @@
         <section class="pricing-section" id="pricing">
           <div class="section-heading">
             <span class="eyebrow">Pricing</span>
-            <h2>Start free. Upgrade when your workflow starts compounding.</h2>
+            <h2>Simple pricing for browser-first prospecting teams.</h2>
+            <p>Start with the free extension workflow, then unlock Pro when you need bulk scans, comparisons, and export-ready operations.</p>
           </div>
 
           <div class="pricing-grid">
@@ -830,8 +874,12 @@
                 <li>Current-site lead discovery</li>
                 <li>JSON export</li>
               </ul>
-              <a href="#pricing">Start Free</a>
-              <div class="pricing-note">Install the extension, scan public sites, and explore the core workflow before upgrading.</div>
+              <a class="pricing-cta-muted" href="#features">Explore Free Features</a>
+              <div class="pricing-badge-row">
+                <span class="pricing-badge">No card required</span>
+                <span class="pricing-badge">Good for solo research</span>
+              </div>
+              <div class="pricing-note">Use the free workflow to scan public websites and validate the product before upgrading.</div>
             </article>
 
             <article class="pricing-card pricing-card-featured">
@@ -844,10 +892,14 @@
                 <li>Compare mode and bulk scans</li>
               </ul>
               <div class="pricing-actions">
-                <a href="#" data-paddle-plan="monthly">Buy Monthly</a>
-                <a href="#" data-paddle-plan="yearly">Buy Yearly</a>
+                <a class="pricing-cta-primary" href="#" data-paddle-plan="monthly">Buy Monthly</a>
+                <a class="pricing-cta-secondary" href="#" data-paddle-plan="yearly">Buy Yearly</a>
               </div>
-              <div class="pricing-note">Annual plan saves you more and gives the same full Pro access.</div>
+              <div class="pricing-badge-row">
+                <span class="pricing-badge">Yearly plan: $79</span>
+                <span class="pricing-badge">Secure Paddle checkout</span>
+              </div>
+              <div class="pricing-note">Choose monthly for flexibility or yearly to save more while keeping the same full Pro access.</div>
             </article>
           </div>
         </section>
