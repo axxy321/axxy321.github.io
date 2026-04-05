@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp terms.html privacy.html refund.html dist/",
+    "build": "vite build && cp terms.html privacy.html refund.html auth-complete.html dist/",
     "preview": "vite preview"
   },
   "dependencies": {
